@@ -1,0 +1,30 @@
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\bin\Debug\AutoPCSleep.exe.config
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\bin\Debug\AutoPCSleep.exe
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\bin\Debug\AutoPCSleep.pdb
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\obj\Debug\AutoPCSleep.csprojAssemblyReference.cache
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\obj\Debug\MainWindow.g.cs
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\obj\Debug\App.g.cs
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\obj\Debug\AutoPCSleep_MarkupCompile.cache
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\obj\Debug\AutoPCSleep_MarkupCompile.lref
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\obj\Debug\MainWindow.baml
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\obj\Debug\AutoPCSleep.g.resources
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\obj\Debug\AutoPCSleep.Properties.Resources.resources
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\obj\Debug\AutoPCSleep.csproj.GenerateResource.cache
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\obj\Debug\AutoPCSleep.csproj.CoreCompileInputs.cache
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\obj\Debug\AutoPCSleep.exe
+C:\Users\ystan\source\repos\AutoPCSleep\AutoPCSleep\obj\Debug\AutoPCSleep.pdb
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\bin\Debug\AutoPCSleep.exe.config
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\bin\Debug\AutoPCSleep.exe
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\bin\Debug\AutoPCSleep.pdb
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\obj\Debug\AutoPCSleep.csprojAssemblyReference.cache
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\obj\Debug\MainWindow.g.cs
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\obj\Debug\App.g.cs
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\obj\Debug\AutoPCSleep_MarkupCompile.cache
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\obj\Debug\AutoPCSleep_MarkupCompile.lref
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\obj\Debug\MainWindow.baml
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\obj\Debug\AutoPCSleep.g.resources
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\obj\Debug\AutoPCSleep.Properties.Resources.resources
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\obj\Debug\AutoPCSleep.csproj.GenerateResource.cache
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\obj\Debug\AutoPCSleep.csproj.CoreCompileInputs.cache
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\obj\Debug\AutoPCSleep.exe
+C:\Users\ystan\source\repos\AutoPCSleep v2\AutoPCSleep\obj\Debug\AutoPCSleep.pdb
