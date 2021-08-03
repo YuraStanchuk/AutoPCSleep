@@ -49,16 +49,8 @@ jobs:
       with:
         node-version: '14'        
 
-    - name: Build WebWindow.Native
-      run: |
-        nuget restore .\AppUI\src\WebWindow.Native\WebWindow.Native.vcxproj -PackagesDirectory .\packages
-        msbuild .\AppUI\src\WebWindow.Native\WebWindow.Native.vcxproj /p:Configuration=$env:Configuration /p:Platform=$env:PlatformWin
-
-    - name: Build BlazorDesktop.JS
-      run: dotnet build .\AppUI\src\BlazorDesktop.JS\BlazorDesktop.JS.csproj -c $env:Configuration
-
     - name: Publish the app
-      run: dotnet publish .\tools\Hand2NoteApp.Welcome\Hand2NoteApp.Welcome.csproj -c $env:Configuration -o .\publish --runtime win-$env:PlatformWin --no-self-contained
+      run: dotnet publish .\AutoPCSleep\AutoPCSleep v3\AutoPCSleep.csproj -c $env:Configuration -o .\publish --runtime win-$env:PlatformWin --no-self-contained
 
     - name: Obfuscate
       run: |
