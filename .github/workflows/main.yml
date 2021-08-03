@@ -1,38 +1,106 @@
-# This is a basic workflow to help you get started with Actions
+name: .NET WebWindow Blazor Desktop
 
-name: CI
+on:[push]
 
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+
   build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    strategy:
+      matrix:
+        configuration: [Release]
+        platform-win: [x64]
+
+    runs-on: windows-latest  
+
+    env:
+      Solution_Name: Hand2Note4.sln
+      Configuration: ${{ matrix.configuration }}
+      PlatformWin: ${{ matrix.platform-win }}
+      Advanced_Installer: C:\Program Files (x86)\Caphyon\Advanced Installer 18.4\bin\x86\AdvancedInstaller.com
+
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+    - name: Setup Git
+      run: git config --system core.longpaths true
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        submodules: 'recursive'
+        token: ${{ secrets.PAT_TOKEN }}
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-          
-      - name: Choco Test
-        run: choco install advanced-installer
-          
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Setup NuGet
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: latest
+
+    - name: Setup NodeJs
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'        
+
+    - name: Build WebWindow.Native
+      run: |
+        nuget restore .\AppUI\src\WebWindow.Native\WebWindow.Native.vcxproj -PackagesDirectory .\packages
+        msbuild .\AppUI\src\WebWindow.Native\WebWindow.Native.vcxproj /p:Configuration=$env:Configuration /p:Platform=$env:PlatformWin
+
+    - name: Build BlazorDesktop.JS
+      run: dotnet build .\AppUI\src\BlazorDesktop.JS\BlazorDesktop.JS.csproj -c $env:Configuration
+
+    - name: Publish the app
+      run: dotnet publish .\tools\Hand2NoteApp.Welcome\Hand2NoteApp.Welcome.csproj -c $env:Configuration -o .\publish --runtime win-$env:PlatformWin --no-self-contained
+
+    - name: Obfuscate
+      run: |
+        dotnet tool install --global Obfuscar.GlobalTool --version 2.2.31
+        Obfuscar.Console.exe Obfuscar.xml
+        cp .\obfuscator\Hand2NoteCore.dll .\publish\Hand2NoteCore.dll
+
+    - name: Install Advanced Installer
+      run: choco install advanced-installer --version 18.4 -y
+
+    - name: Setup Advanced Installer
+      shell: cmd
+      run: |
+        call "%Advanced_Installer%" /register ${{ secrets.Advanced_Installer_License_Id }}
+
+    - name: Build installer
+      shell: cmd
+      run: |
+        call "%Advanced_Installer%" /build .\tools\Hand2NoteApp.Installer\Hand2NoteApp.Installer.aip
+
+     - name: Installer Azure Blob Upload
+       uses: LanceMcCarthy/Action-AzureBlobUpload@v1.9.0
+       with:
+         connection_string: ${{ secrets.H2N_Azure_Blob_Connection_String }}
+         container_name: beta
+         source_folder: installer\Hand2NoteApp.Installer.exe
+
+     - name: Azure service principal login
+       uses: azure/login@v1
+       with:
+         creds: ${{ secrets.AZURE_CREDENTIALS }}
+     - name: Purge Azure CDN
+       run: |
+         az cdn endpoint purge -n h2n-uptoyou --profile-name uptoyou-cdn --content-paths "/uptoyou/.updates.proto.xz;/uptoyou/notes/*;/main/Hand2NoteApp.Installer.exe;/beta/Hand2NoteApp.Installer.exe" --resource-group hand2note --no-wait
+     - name: Azure service principal logout
+       run: |
+        az logout
+
+    - name: Post to a Slack channel
+      id: slack
+      uses: slackapi/slack-github-action@v1.14.0
+      with:
+        channel-id: '#updates-beta'  # Slack channel id to post message
+        slack-message: 'Test. Publishing workflow finished.'
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
