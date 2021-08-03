@@ -1,6 +1,8 @@
 name: .NET WebWindow Blazor Desktop
 
-on:[push]
+on:
+  push
+
 
 jobs:
 
@@ -78,23 +80,23 @@ jobs:
       run: |
         call "%Advanced_Installer%" /build .\tools\Hand2NoteApp.Installer\Hand2NoteApp.Installer.aip
 
-     - name: Installer Azure Blob Upload
-       uses: LanceMcCarthy/Action-AzureBlobUpload@v1.9.0
-       with:
-         connection_string: ${{ secrets.H2N_Azure_Blob_Connection_String }}
-         container_name: beta
-         source_folder: installer\Hand2NoteApp.Installer.exe
+    # - name: Installer Azure Blob Upload
+    #   uses: LanceMcCarthy/Action-AzureBlobUpload@v1.9.0
+    #   with:
+    #     connection_string: ${{ secrets.H2N_Azure_Blob_Connection_String }}
+    #     container_name: beta
+    #     source_folder: installer\Hand2NoteApp.Installer.exe
 
-     - name: Azure service principal login
-       uses: azure/login@v1
-       with:
-         creds: ${{ secrets.AZURE_CREDENTIALS }}
-     - name: Purge Azure CDN
-       run: |
-         az cdn endpoint purge -n h2n-uptoyou --profile-name uptoyou-cdn --content-paths "/uptoyou/.updates.proto.xz;/uptoyou/notes/*;/main/Hand2NoteApp.Installer.exe;/beta/Hand2NoteApp.Installer.exe" --resource-group hand2note --no-wait
-     - name: Azure service principal logout
-       run: |
-        az logout
+    # - name: Azure service principal login
+    #   uses: azure/login@v1
+    #   with:
+    #     creds: ${{ secrets.AZURE_CREDENTIALS }}
+    # - name: Purge Azure CDN
+    #   run: |
+    #     az cdn endpoint purge -n h2n-uptoyou --profile-name uptoyou-cdn --content-paths "/uptoyou/.updates.proto.xz;/uptoyou/notes/*;/main/Hand2NoteApp.Installer.exe;/beta/Hand2NoteApp.Installer.exe" --resource-group hand2note --no-wait
+    # - name: Azure service principal logout
+    #   run: |
+    #     az logout
 
     - name: Post to a Slack channel
       id: slack
